@@ -8,6 +8,9 @@ import pgSession from "connect-pg-simple";
 import pool from "./db.js";
 import authRoutes from "./routes/auth.js";
 import path from "path";
+console.log("📦 Importing meta.js...");
+import metaRoutes from "./routes/meta.js"; // 👈
+console.log("🧠 Inside SERVER.JS - top of file");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -66,7 +69,8 @@ app.use(
 // Rest of your middleware and routes remain the same
 app.use(express.json());
 app.use("/auth", authRoutes);
-
+app.use("/api", metaRoutes); // 👈 /api/categories & /api/places
+console.log("✅ Meta routes mounted at /api");
 // Health check endpoints
 app.get("/", (req, res) => {
   res.send("🚀 Express Server with Session-Based Authentication is Running!");
@@ -80,6 +84,9 @@ app.get("/test-db", async (req, res) => {
     console.error("❌ Database connection failed:", error);
     res.status(500).json({ error: "Database connection failed" });
   }
+});
+app.get("/api/test-direct", (req, res) => {
+  res.send("Direct route from server.js working!");
 });
 
 app.listen(PORT, () => {

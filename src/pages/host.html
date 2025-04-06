@@ -1,0 +1,221 @@
+<div
+  class="container mx-auto max-w-3xl p-8 bg-white rounded-2xl shadow-xl mt-6 space-y-6"
+>
+  <!-- 🗺️ Map Section -->
+  <div>
+    <h2 class="text-xl font-bold text-gray-700 mb-2">
+      📍 Choose Event Location
+    </h2>
+    <p class="text-sm text-gray-500 mb-3">
+      Click on the map to set your event's exact location.
+    </p>
+    <div id="eventMap" class="h-64 w-full rounded-lg border"></div>
+  </div>
+
+  <!-- 📝 Multi-Step Form -->
+  <form id="eventForm" class="space-y-6">
+    <!-- Step 1: Basic Info -->
+    <div class="form-step" data-step="1">
+      <h2 class="text-2xl font-semibold text-blue-600 mb-4">
+        Step 1: Basic Information
+      </h2>
+
+      <label class="block mb-2 font-medium text-gray-700">Event Title</label>
+      <input
+        type="text"
+        name="title"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >Event Description</label
+      >
+      <textarea
+        name="description"
+        class="textarea textarea-bordered w-full mb-4"
+        rows="4"
+        required
+      ></textarea>
+
+      <label class="block mb-2 font-medium text-gray-700">Category</label>
+      <select
+        id="category"
+        name="category_id"
+        class="select select-bordered w-full mb-4"
+        required
+      >
+        <option disabled selected>Select Category</option>
+      </select>
+
+      <label class="block mb-2 font-medium text-gray-700">Place</label>
+      <select
+        id="place"
+        name="place_id"
+        class="select select-bordered w-full mb-4"
+        required
+      >
+        <option disabled selected>Select Place</option>
+      </select>
+    </div>
+
+    <!-- Step 2: Location & Schedule -->
+    <div class="form-step hidden" data-step="2">
+      <h2 class="text-2xl font-semibold text-blue-600 mb-4">
+        Step 2: Location & Schedule
+      </h2>
+
+      <label class="block mb-2 font-medium text-gray-700">Venue Name</label>
+      <input
+        type="text"
+        name="venue"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700">Address</label>
+      <input
+        type="text"
+        name="address"
+        placeholder="Event Address"
+        class="input input-bordered w-full mb-3"
+        required
+        readonly
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >Start Date & Time</label
+      >
+      <input
+        type="datetime-local"
+        name="start_date"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >End Date & Time</label
+      >
+      <input
+        type="datetime-local"
+        name="end_date"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700">Latitude</label>
+      <input
+        type="text"
+        name="latitude"
+        class="input input-bordered w-full mb-4 bg-gray-100"
+        readonly
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700">Longitude</label>
+      <input
+        type="text"
+        name="longitude"
+        class="input input-bordered w-full mb-4 bg-gray-100"
+        readonly
+        required
+      />
+    </div>
+
+    <!-- Step 3: Registration & Settings -->
+    <div class="form-step hidden" data-step="3">
+      <h2 class="text-2xl font-semibold text-blue-600 mb-4">
+        Step 3: Registration & Settings
+      </h2>
+
+      <label class="block mb-2 font-medium text-gray-700">Ticket Price</label>
+      <input
+        type="number"
+        name="price"
+        step="0.01"
+        placeholder="0.00 for free"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >Seats Available</label
+      >
+      <input
+        type="number"
+        name="seats_available"
+        class="input input-bordered w-full mb-4"
+        required
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >Target Audience</label
+      >
+      <select
+        name="target_audience"
+        class="select select-bordered w-full mb-4"
+        required
+      >
+        <option disabled selected>Choose</option>
+        <option value="any">Any</option>
+        <option value="under_18">Under 18</option>
+        <option value="above_18">Above 18</option>
+      </select>
+
+      <label class="block mb-2 font-medium text-gray-700">Tags</label>
+      <input
+        type="text"
+        name="tags"
+        placeholder="#marathon, #freefood"
+        class="input input-bordered w-full mb-4"
+      />
+
+      <label class="block mb-2 font-medium text-gray-700"
+        >YouTube Link (optional)</label
+      >
+      <input
+        type="url"
+        name="youtube_link"
+        class="input input-bordered w-full mb-4"
+      />
+
+      <label class="flex items-center space-x-3">
+        <input type="checkbox" name="is_public" class="checkbox" />
+        <span class="text-gray-700">Is this event public?</span>
+      </label>
+
+      <label class="flex items-center space-x-3 mt-3">
+        <input type="checkbox" name="allow_register" class="checkbox" />
+        <span class="text-gray-700"
+          >Allow registration through this website?</span
+        >
+      </label>
+
+      <input
+        type="url"
+        name="registration_link"
+        placeholder="External Registration Link"
+        class="input input-bordered w-full mt-4"
+      />
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between items-center pt-6">
+      <button
+        type="button"
+        id="prevBtn"
+        class="btn bg-gray-200 text-gray-700 hover:bg-gray-300"
+        disabled
+      >
+        ⬅ Back
+      </button>
+      <button
+        type="button"
+        id="nextBtn"
+        class="btn bg-blue-600 text-white hover:bg-blue-700"
+      >
+        Next ➡
+      </button>
+    </div>
+  </form>
+</div>

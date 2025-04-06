@@ -1,6 +1,11 @@
 import { setupPricingToggle } from "../js/modules/pricingToggle.js";
 import { initializeEventPage } from "./eventMain.js";
 import { setupProfileMenu } from "../js/modules/profileMenu.js"; // ✅ Import profile menu setup
+import { initializeHostPage } from "../js/modules/host.js"; // ✅ Import host setup
+import {
+  setupAdminMenu,
+  initializeAdminPage,
+} from "../js/modules/adminMenu.js";
 
 export async function loadPage(page) {
   try {
@@ -15,6 +20,11 @@ export async function loadPage(page) {
       initializeEventPage();
     } else if (page === "profile") {
       setupProfileMenu(); // ✅ Profile page setup
+    } else if (page === "host") {
+      initializeHostPage(); // ✅ Hook in host logic
+    } else if (page == "admin") {
+      setupAdminMenu();
+      initializeAdminPage();
     }
   } catch (err) {
     document.getElementById("content").innerHTML = `<p>Page not found.</p>`;
