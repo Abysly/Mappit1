@@ -1,0 +1,589 @@
+<div class="flex h-full">
+  <!-- Premium Sidebar -->
+  <aside
+    class="w-64 fixed h-full bg-white shadow-xl z-10 border-r border-gray-100"
+  >
+    <div class="p-5 border-b border-gray-100 flex items-center space-x-3">
+      <div
+        class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold"
+      >
+        EM
+      </div>
+      <h1 class="text-xl font-bold text-gray-800">
+        EventMapper <span class="text-blue-600">Admin</span>
+      </h1>
+    </div>
+
+    <div class="overflow-y-auto py-4 px-3 h-full">
+      <div class="px-4 mb-6">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-sm"
+          />
+          <svg
+            class="absolute left-3 top-2.5 h-4 w-4 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+
+      <ul class="space-y-1">
+        <!-- Dashboard -->
+        <li>
+          <a href="#" class="sidebar-item active">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+              ></path>
+            </svg>
+            <span class="ml-3">Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Event Management -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+            <span class="ml-3">Event Management</span>
+            <span class="badge bg-blue-100 text-blue-800">15 new</span>
+          </a>
+        </li>
+
+        <!-- User Management -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+            <span class="ml-3">User Management</span>
+          </a>
+        </li>
+
+        <!-- Venue Management -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
+            </svg>
+            <span class="ml-3">Venue Management</span>
+          </a>
+        </li>
+
+        <!-- Analytics -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              ></path>
+            </svg>
+            <span class="ml-3">Analytics</span>
+          </a>
+        </li>
+
+        <!-- Content Moderation -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              ></path>
+            </svg>
+            <span class="ml-3">Content Moderation</span>
+            <span class="badge bg-red-100 text-red-800">3 reports</span>
+          </a>
+        </li>
+
+        <!-- Settings -->
+        <li>
+          <a href="#" class="sidebar-item">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
+            </svg>
+            <span class="ml-3">System Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="px-4 mt-8">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl">
+          <h3 class="text-sm font-medium text-gray-800 mb-1">Upgrade to Pro</h3>
+          <p class="text-xs text-gray-600 mb-3">
+            Get advanced analytics and more features
+          </p>
+          <button
+            class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-medium py-2 px-3 rounded-lg hover:shadow-md transition-all"
+          >
+            Upgrade Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
+          <p class="text-gray-500">Welcome back, Administrator</p>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-50"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              ></path>
+            </svg>
+            <span>Create New</span>
+          </button>
+          <button
+            class="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-50"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              ></path>
+            </svg>
+            <span>Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="stats-card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Total Events</p>
+              <p class="text-2xl font-semibold text-gray-800">1,248</p>
+              <p class="text-xs text-green-500 mt-1">↑ 12% from last month</p>
+            </div>
+            <div class="p-3 rounded-full bg-blue-50">
+              <svg
+                class="w-6 h-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Active Users</p>
+              <p class="text-2xl font-semibold text-gray-800">5,342</p>
+              <p class="text-xs text-green-500 mt-1">↑ 8% from last month</p>
+            </div>
+            <div class="p-3 rounded-full bg-green-50">
+              <svg
+                class="w-6 h-6 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Pending Approvals</p>
+              <p class="text-2xl font-semibold text-gray-800">23</p>
+              <p class="text-xs text-red-500 mt-1">↓ 5% from last month</p>
+            </div>
+            <div class="p-3 rounded-full bg-yellow-50">
+              <svg
+                class="w-6 h-6 text-yellow-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Venues Listed</p>
+              <p class="text-2xl font-semibold text-gray-800">187</p>
+              <p class="text-xs text-green-500 mt-1">↑ 3 new this week</p>
+            </div>
+            <div class="p-3 rounded-full bg-indigo-50">
+              <svg
+                class="w-6 h-6 text-indigo-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                ></path>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Preview -->
+      <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8"
+      >
+        <div class="p-5 border-b border-gray-100">
+          <h3 class="font-medium text-gray-800">Event Map Overview</h3>
+        </div>
+        <div
+          class="map-container rounded-b-xl flex items-center justify-center"
+        >
+          <div class="text-center p-8">
+            <svg
+              class="w-16 h-16 mx-auto text-gray-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+              ></path>
+            </svg>
+            <h4 class="mt-4 text-lg font-medium text-gray-700">
+              Interactive Event Map
+            </h4>
+            <p class="mt-1 text-sm text-gray-500">
+              Visualize all events across locations
+            </p>
+            <button
+              class="mt-4 bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-blue-600 hover:bg-gray-50"
+            >
+              Open Full Map
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity & Quick Actions -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Recent Activity -->
+        <div
+          class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100"
+        >
+          <div
+            class="p-5 border-b border-gray-100 flex justify-between items-center"
+          >
+            <h3 class="font-medium text-gray-800">Recent Activity</h3>
+            <a href="#" class="text-sm text-blue-600 hover:underline"
+              >View All</a
+            >
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div class="p-4 hover:bg-gray-50 transition-colors">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center"
+                  >
+                    <svg
+                      class="h-5 w-5 text-blue-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-gray-800">
+                    New event created
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    "Tech Conference 2023" by John Doe
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 hover:bg-gray-50 transition-colors">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="h-10 w-10 rounded-full bg-green-50 flex items-center justify-center"
+                  >
+                    <svg
+                      class="h-5 w-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-gray-800">
+                    Event approved
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    "Music Festival" by EventOrg
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 hover:bg-gray-50 transition-colors">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="h-10 w-10 rounded-full bg-purple-50 flex items-center justify-center"
+                  >
+                    <svg
+                      class="h-5 w-5 text-purple-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-gray-800">
+                    New user registered
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Event organizer "Sarah Williams"
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+          <div class="p-5 border-b border-gray-100">
+            <h3 class="font-medium text-gray-800">Quick Actions</h3>
+          </div>
+          <div class="p-4 space-y-3">
+            <button
+              class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+            >
+              <span class="text-sm font-medium">Approve Pending Events</span>
+              <span
+                class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+                >15</span
+              >
+            </button>
+            <button
+              class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+            >
+              <span class="text-sm font-medium">Review Reported Content</span>
+              <span
+                class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full"
+                >3</span
+              >
+            </button>
+            <button
+              class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+            >
+              <span class="text-sm font-medium">Add New Venue</span>
+              <svg
+                class="w-4 h-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </button>
+            <button
+              class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+            >
+              <span class="text-sm font-medium">Send Announcement</span>
+              <svg
+                class="w-4 h-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,174 @@
+<div class="p-6 bg-gray-100 min-h-screen font-sans">
+  <!-- 🔥 Trending Events -->
+  <div
+    class="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-6 rounded-2xl shadow-xl mb-8"
+  >
+    <h2 class="text-2xl font-bold mb-1">🔥 Trending Events</h2>
+    <p class="text-sm opacity-90">
+      Don't miss out on the hottest events happening now!
+    </p>
+  </div>
+
+  <!-- ➕ Add Event Button -->
+  <div class="flex justify-end mb-6">
+    <div class="tooltip">
+      <div class="tooltip-content">
+        <div
+          class="animate-bounce text-orange-400 -rotate-10 text-2xl font-black"
+        >
+          Wow!
+        </div>
+      </div>
+      <button class="btn">Hover me</button>
+    </div>
+  </div>
+
+  <!-- 🎟️ Featured Events (Carousel) -->
+  <div class="mb-10">
+    <h2 class="text-2xl font-bold mb-4">🎟️ Featured Events</h2>
+    <div class="rounded-2xl overflow-hidden shadow-xl relative">
+      <img
+        src="https://via.placeholder.com/1200x400?text=Featured+Event"
+        class="w-full h-auto object-cover"
+        alt="Featured Event"
+      />
+      <div
+        class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white p-4 rounded-xl"
+      >
+        <h3 class="text-xl font-bold">Sunset Music Festival</h3>
+        <p class="text-sm">April 12, 2025 • Central Park NYC</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔍 Search & Filters -->
+  <div class="flex flex-wrap gap-4 mb-10">
+    <input
+      type="text"
+      placeholder="Search events..."
+      class="p-3 border border-gray-300 rounded-xl w-full md:w-1/3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      id="searchEvents"
+    />
+    <select
+      id="eventCategory"
+      class="p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+    >
+      <option value="">All Categories</option>
+      <option value="concert">🎶 Concert</option>
+      <option value="tech">💻 Tech Meetup</option>
+      <option value="gaming">🎮 Gaming</option>
+    </select>
+    <select
+      id="eventDate"
+      class="p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+    >
+      <option value="">Any Date</option>
+      <option value="this-week">📅 This Week</option>
+      <option value="this-month">📆 This Month</option>
+    </select>
+  </div>
+
+  <!-- 📜 Upcoming Events -->
+  <h2 class="text-2xl font-bold mb-4">📜 Upcoming Events</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Event Card -->
+    <div
+      class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-[1.02] hover:shadow-2xl"
+    >
+      <img
+        src="https://via.placeholder.com/400x220?text=Music+Event"
+        class="w-full object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm text-gray-500">🎶 Concert</span>
+          <span class="text-xs text-white bg-blue-500 px-2 py-0.5 rounded-full"
+            >#free</span
+          >
+        </div>
+        <h3 class="text-lg font-semibold">Sunset Music Festival</h3>
+        <p class="text-sm text-gray-600">
+          📅 April 12, 2025 • 📍 Central Park, NYC
+        </p>
+        <p class="mt-2 text-sm">
+          A night of unforgettable music under the stars. 🎤
+        </p>
+        <button class="mt-3 text-blue-600 hover:underline text-sm">
+          Add to Calendar
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-[1.02] hover:shadow-2xl"
+    >
+      <img
+        src="https://via.placeholder.com/400x220?text=Tech+Meetup"
+        class="w-full object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm text-gray-500">💻 Tech Meetup</span>
+          <span class="text-xs text-white bg-green-500 px-2 py-0.5 rounded-full"
+            >#tech</span
+          >
+        </div>
+        <h3 class="text-lg font-semibold">AI & You - Tech Meetup</h3>
+        <p class="text-sm text-gray-600">
+          📅 April 15, 2025 • 📍 SF Innovation Hub
+        </p>
+        <p class="mt-2 text-sm">
+          Explore the latest in AI with leading experts and startups. 🤖
+        </p>
+        <button class="mt-3 text-blue-600 hover:underline text-sm">
+          Add to Calendar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📝 Community Events -->
+  <h2 class="text-2xl font-bold mt-12 mb-4">📝 Community Events</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div
+      class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-[1.02] hover:shadow-2xl"
+    >
+      <img
+        src="https://via.placeholder.com/400x220?text=Board+Games"
+        class="w-full object-cover"
+      />
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm text-gray-500">🎮 Gaming</span>
+          <span
+            class="text-xs text-white bg-yellow-500 px-2 py-0.5 rounded-full"
+            >#casual</span
+          >
+        </div>
+        <h3 class="text-lg font-semibold">Board Game Night</h3>
+        <p class="text-sm text-gray-600">
+          📅 April 10, 2025 • 📍 The Geek Cafe
+        </p>
+        <p class="mt-2 text-sm">
+          Bring your favorite board games and meet other players! 🎲
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📌 Explore Events Button -->
+  <div class="text-center mt-12">
+    <button
+      id="showMapBtn"
+      class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition"
+    >
+      🌍 Explore Events on Map
+    </button>
+  </div>
+
+  <!-- 🌍 Event Map -->
+  <div
+    id="eventMap"
+    class="w-full h-[400px] rounded-2xl shadow mt-6 hidden"
+  ></div>
+</div>

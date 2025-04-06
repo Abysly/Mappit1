@@ -1,0 +1,88 @@
+<section
+  class="min-h-screen flex flex-col justify-center items-center bg-base-100 px-4"
+>
+  <h1
+    class="text-5xl md:text-6xl font-extrabold text-base-content mb-6 text-center"
+  >
+    Welcome to <span class="text-primary">Event Mapper</span>
+  </h1>
+  <p class="text-lg text-base-content/70 mb-8 text-center max-w-2xl">
+    Discover, register, and map the best events happening around you. Unlock
+    premium features for exclusive events.
+  </p>
+  <a
+    href="#event"
+    class="btn btn-primary btn-lg shadow-lg transition transform hover:scale-105"
+  >
+    Explore Events
+  </a>
+  <div class="absolute bottom-8 animate-bounce text-base-content/40">
+    <span>↓ Scroll for more</span>
+  </div>
+</section>
+
+<section
+  id="event"
+  class="min-h-screen flex flex-col justify-center bg-base-100 relative overflow-hidden px-8 py-20"
+>
+  <!-- Floating Decorations -->
+  <div
+    class="absolute -top-10 -left-10 w-32 h-32 bg-primary rounded-full opacity-20 blur-3xl animate-pulse"
+  ></div>
+  <div
+    class="absolute bottom-0 right-0 w-48 h-48 bg-secondary rounded-full opacity-20 blur-3xl animate-ping"
+  ></div>
+
+  <!-- Content -->
+  <div class="space-y-24 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <img
+        src="../../public/assets/map.jpg"
+        alt="Event"
+        class="rounded-lg shadow-lg w-full md:w-1/2"
+      />
+      <div class="w-full md:w-1/2">
+        <h2 class="text-4xl font-semibold mb-4 text-base-content">
+          Find Events Near You
+        </h2>
+        <p class="text-base-content/70 text-lg">
+          Easily explore upcoming events happening in your city using our
+          interactive event map.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+      <img
+        src="../../public/assets/map.jpg"
+        alt="Community"
+        class="rounded-lg shadow-lg w-full md:w-1/2"
+      />
+      <div class="w-full md:w-1/2">
+        <h2 class="text-4xl font-semibold mb-4 text-base-content">
+          Join Event Communities
+        </h2>
+        <p class="text-base-content/70 text-lg">
+          Connect with people who share your interests and never miss an event.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <img
+        src="../../public/assets/map.jpg"
+        alt="Map"
+        class="rounded-lg shadow-lg w-full md:w-1/2"
+      />
+      <div class="w-full md:w-1/2">
+        <h2 class="text-4xl font-semibold mb-4 text-base-content">
+          Interactive Event Map
+        </h2>
+        <p class="text-base-content/70 text-lg">
+          Visualize all events around you and filter them based on your
+          preferences.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

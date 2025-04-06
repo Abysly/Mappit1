@@ -1,0 +1,44 @@
+<!-- subscribe.html -->
+<div
+  id="subscribeModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden"
+>
+  <div
+    class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl relative animate-fade-in"
+  >
+    <!-- Close Button -->
+    <button
+      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
+      onclick="import('./auth/subscribeModel.js').then(m => m.closeSubscribeModal())"
+    >
+      &times;
+    </button>
+
+    <div class="flex flex-col items-center">
+      <h2 class="text-2xl font-bold text-slate-800 mb-4">
+        Unlock Pro Features
+      </h2>
+      <p class="text-slate-500 mb-6 text-center">
+        Get access to premium events, storage, and priority support.
+      </p>
+      <div
+        class="bg-white rounded-xl border-2 border-slate-900 p-6 w-full text-center shadow"
+      >
+        <h3 class="text-xl font-semibold mb-2">Pro Plan</h3>
+        <p class="text-3xl font-bold text-slate-900 mb-4">$8/mo</p>
+        <ul class="text-slate-600 text-sm mb-6 space-y-1 text-left">
+          <li>✔️ All Starter Features</li>
+          <li>✔️ Premium Event Access</li>
+          <li>✔️ Priority Support</li>
+          <li>✔️ 10 GB Storage</li>
+        </ul>
+        <a
+          href="/pricing.html#pricing"
+          class="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-700"
+        >
+          Subscribe Now
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

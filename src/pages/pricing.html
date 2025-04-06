@@ -1,0 +1,97 @@
+<section
+  class="flex flex-col items-center justify-center min-h-screen px-4 py-10 bg-slate-50"
+>
+  <h2 class="text-4xl font-bold mb-6 text-slate-800 text-center">
+    Choose Your Plan
+  </h2>
+  <p class="text-slate-500 mb-10 text-center max-w-md">
+    Pick a plan that suits your needs. You can switch between Monthly & Yearly
+    billing anytime.
+  </p>
+
+  <!-- Toggle -->
+  <div
+    class="relative bg-slate-200 rounded-full p-1 flex w-72 mb-10 shadow-md"
+    id="billingToggle"
+  >
+    <button
+      type="button"
+      id="monthlyBtn"
+      class="w-1/2 py-2 text-sm font-medium bg-white text-slate-900 rounded-full transition-all duration-300 shadow"
+    >
+      Monthly
+    </button>
+    <button
+      type="button"
+      id="yearlyBtn"
+      class="w-1/2 py-2 text-sm font-medium text-slate-700 rounded-full transition-all duration-300"
+    >
+      Yearly
+    </button>
+  </div>
+
+  <!-- Centered Pricing Cards -->
+  <div class="w-full flex justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-4">
+      <!-- Starter -->
+      <div
+        class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center"
+      >
+        <h3 class="text-2xl font-semibold mb-3">Starter</h3>
+        <p class="mt-4 mb-6 text-center text-slate-600">
+          Perfect for beginners just getting started.
+        </p>
+        <p class="mb-6">
+          <span
+            class="price text-4xl font-bold text-slate-900"
+            data-monthly="0"
+            data-yearly="0"
+            >$0</span
+          >
+          <span class="duration text-base text-slate-500">/mo</span>
+        </p>
+        <ul class="text-slate-600 mb-6 space-y-2 text-sm text-left w-full">
+          <li>✔️ Basic Event Access</li>
+          <li>✔️ Free Community Support</li>
+          <li>✔️ 1 GB Storage</li>
+        </ul>
+        <button
+          class="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-700"
+        >
+          Get Started
+        </button>
+      </div>
+
+      <!-- Pro -->
+      <div
+        class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center border-2 border-slate-900 scale-105"
+        data-plan="pro"
+      >
+        <h3 class="text-2xl font-semibold mb-3">Pro</h3>
+        <p class="mt-4 mb-6 text-center text-slate-600">
+          For professionals who need more features.
+        </p>
+        <p class="mb-6">
+          <span
+            class="price text-4xl font-bold text-slate-900"
+            data-monthly="8"
+            data-yearly="80"
+            >$8</span
+          >
+          <span class="duration text-base text-slate-500">/mo</span>
+        </p>
+        <ul class="text-slate-600 mb-6 space-y-2 text-sm text-left w-full">
+          <li>✔️ All Starter Features</li>
+          <li>✔️ Premium Event Access</li>
+          <li>✔️ Priority Support</li>
+          <li>✔️ 10 GB Storage</li>
+        </ul>
+        <button
+          class="px-6 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-700"
+        >
+          Upgrade Now
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
