@@ -12,6 +12,7 @@ console.log("📦 Importing meta.js...");
 import metaRoutes from "./routes/meta.js"; // 👈
 console.log("🧠 Inside SERVER.JS - top of file");
 import userRoutes from "./routes/users.js";
+import backupRoute from "./routes/backup.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -72,6 +73,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/api", metaRoutes); // 👈 /api/categories & /api/places
 app.use("/api/users", userRoutes);
+app.use("/api/backup", backupRoute);
 console.log("✅ Meta routes mounted at /api");
 // Health check endpoints
 app.get("/", (req, res) => {

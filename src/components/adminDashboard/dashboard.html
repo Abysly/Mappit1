@@ -4,17 +4,78 @@
 
   <!-- Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Total Events Card -->
     <div class="bg-white shadow rounded-xl p-4">
-      <h3 class="text-lg font-medium">Total Events</h3>
-      <p class="text-3xl font-bold text-blue-600">128</p>
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-full bg-blue-100 text-blue-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium">Total Events</h3>
+      </div>
+      <p id="total-events" class="text-3xl font-bold text-blue-600 mt-2">...</p>
     </div>
+
+    <!-- Registered Users Card -->
     <div class="bg-white shadow rounded-xl p-4">
-      <h3 class="text-lg font-medium">Registered Users</h3>
-      <p class="text-3xl font-bold text-green-600">2,341</p>
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-full bg-green-100 text-green-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium">Registered Users</h3>
+      </div>
+      <p id="total-users" class="text-3xl font-bold text-green-600 mt-2">...</p>
     </div>
+
+    <!-- Total Categories Card -->
     <div class="bg-white shadow rounded-xl p-4">
-      <h3 class="text-lg font-medium">Active Venues</h3>
-      <p class="text-3xl font-bold text-purple-600">45</p>
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-full bg-purple-100 text-purple-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium">Total Categories</h3>
+      </div>
+      <p id="total-categories" class="text-3xl font-bold text-purple-600 mt-2">
+        ...
+      </p>
     </div>
   </div>
 
@@ -30,20 +91,7 @@
           <th class="px-4 py-2">Status</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="border-b">
-          <td class="px-4 py-2">Startup Pitch Fest</td>
-          <td class="px-4 py-2">Apr 12, 2025</td>
-          <td class="px-4 py-2">Alice Walker</td>
-          <td class="px-4 py-2 text-green-600 font-medium">Approved</td>
-        </tr>
-        <tr class="border-b">
-          <td class="px-4 py-2">Music Jam</td>
-          <td class="px-4 py-2">Apr 20, 2025</td>
-          <td class="px-4 py-2">Bob Marley</td>
-          <td class="px-4 py-2 text-yellow-600 font-medium">Pending</td>
-        </tr>
-      </tbody>
+      <tbody id="recent-events-tbody"></tbody>
     </table>
   </div>
 </div>

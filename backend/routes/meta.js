@@ -113,11 +113,11 @@ router.post("/events", async (req, res) => {
 });
 
 // GET /api/events - Fetch all events with organizer's username, category, and place
+// GET /api/events - Fetch all events with organizer's username, category, and place, excluding promoted
 router.get("/events", async (req, res) => {
   try {
     const { is_approved } = req.query;
 
-    // Base SQL query to join events with users (organizer), categories, and places
     let query = `
       SELECT 
         e.id, e.title, e.description, e.start_date, e.end_date, e.venue, e.address, 
@@ -130,28 +130,18 @@ router.get("/events", async (req, res) => {
       LEFT JOIN users u ON e.organizer_id = u.id
       LEFT JOIN category c ON e.category_id = c.id
       LEFT JOIN places p ON e.place_id = p.id
+      WHERE e.id NOT IN (SELECT event_id FROM promote_event)
     `;
 
-    // If the `is_approved` query parameter is provided, filter the events by approval status
+    // Optional: filter by approval status
     if (is_approved !== undefined) {
-      // Use TRUE or FALSE depending on the query parameter value
       const approvedValue = is_approved === "false" ? false : true;
-      query += ` WHERE e.is_approved = ${approvedValue}`;
+      query += ` AND e.is_approved = ${approvedValue}`;
     }
 
-    // Log the query for debugging purposes
-    console.log("Executing query:", query);
-
-    // Execute the query
     const result = await pool.query(query);
-
-    // Log the result for debugging purposes
-    console.log("Fetched events:", result.rows);
-
-    // Send response with the events data in JSON format
     res.status(200).json(result.rows);
   } catch (err) {
-    // If there's an error with the database query or something else
     console.error("Error fetching events:", err);
     res
       .status(500)
@@ -273,6 +263,148 @@ router.delete("/places/:id", async (req, res) => {
   } catch (err) {
     console.error("Error deleting place:", err);
     res.status(500).json({ error: "Failed to delete place" });
+  }
+});
+
+// ✅ GET /api/users/count
+router.get("/users/count", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT COUNT(*) FROM users");
+    res.json({ count: parseInt(result.rows[0].count, 10) });
+  } catch (err) {
+    console.error("Error counting users:", err);
+    res.status(500).json({ error: "Failed to count users" });
+  }
+});
+// ✅ GET /api/events/count
+router.get("/events/count", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT COUNT(*) FROM events");
+    res.json({ count: parseInt(result.rows[0].count, 10) });
+  } catch (err) {
+    console.error("Error counting events:", err);
+    res.status(500).json({ error: "Failed to count events" });
+  }
+});
+// ✅ GET /api/categories/count
+router.get("/categories/count", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT COUNT(*) FROM category");
+    res.json({ count: parseInt(result.rows[0].count, 10) });
+  } catch (err) {
+    console.error("Error counting categories:", err);
+    res.status(500).json({ error: "Failed to count categories" });
+  }
+});
+// ✅ GET /api/events/recent - Recent 5 events by created_at
+router.get("/events/recent", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        e.title, 
+        e.created_at, 
+        u.name AS organizer, 
+        CASE 
+          WHEN e.is_approved THEN 'active' 
+          ELSE 'pending' 
+        END AS status
+      FROM events e
+      LEFT JOIN users u ON e.organizer_id = u.id
+      ORDER BY e.created_at DESC
+      LIMIT 5
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching recent events:", err);
+    res.status(500).json({ error: "Failed to fetch recent events" });
+  }
+});
+
+router.post("/promote", async (req, res) => {
+  const { event_id } = req.body;
+
+  if (!event_id) {
+    return res.status(400).json({ error: "event_id is required" });
+  }
+
+  try {
+    // Count current promotions
+    const countRes = await pool.query("SELECT COUNT(*) FROM promote_event");
+    const count = parseInt(countRes.rows[0].count);
+
+    if (count >= 5) {
+      return res
+        .status(400)
+        .json({ error: "Maximum of 5 events can be promoted" });
+    }
+
+    // Get available IDs from 1–5
+    const usedIdsRes = await pool.query(
+      "SELECT id FROM promote_event ORDER BY id ASC"
+    );
+    const usedIds = usedIdsRes.rows.map((row) => row.id);
+    const availableId = [1, 2, 3, 4, 5].find((id) => !usedIds.includes(id));
+
+    // Insert promotion
+    const insertRes = await pool.query(
+      "INSERT INTO promote_event (id, event_id) VALUES ($1, $2) RETURNING *",
+      [availableId, event_id]
+    );
+
+    res
+      .status(201)
+      .json({ message: "Event promoted", promotion: insertRes.rows[0] });
+  } catch (err) {
+    console.error("Error promoting event:", err);
+    res.status(500).json({ error: "Failed to promote event" });
+  }
+});
+router.get("/promote", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        pe.id AS promote_id,
+        e.id, e.title, e.description, e.start_date, e.end_date, e.venue, e.address, 
+        e.latitude, e.longitude, e.price, e.seats_available, e.target_audience, 
+        e.tags, e.youtube_link, e.is_public, e.allow_register, e.registration_link, e.is_approved,
+        u.name AS organizer_name,
+        c.name AS category_name,
+        p.name AS place_name
+      FROM promote_event pe
+      JOIN events e ON pe.event_id = e.id
+      LEFT JOIN users u ON e.organizer_id = u.id
+      LEFT JOIN category c ON e.category_id = c.id
+      LEFT JOIN places p ON e.place_id = p.id
+      ORDER BY pe.id
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Error fetching promoted events:", err);
+    res.status(500).json({ error: "Failed to fetch promoted events" });
+  }
+});
+
+router.delete("/promote/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM promote_event WHERE id = $1 RETURNING *",
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Promotion not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Promotion removed", promotion: result.rows[0] });
+  } catch (err) {
+    console.error("Error deleting promoted event:", err);
+    res.status(500).json({ error: "Failed to delete promoted event" });
   }
 });
 

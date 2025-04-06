@@ -1,11 +1,20 @@
+import {
+  loadCategories,
+  loadPlaces,
+  setupCategoryAndPlaceCreation,
+} from "./categoryLoader.js";
+import { loadDashboard } from "./dashboard.js";
+import { initBackupExport } from "./backupSetting.js";
+import { initAnalytics } from "./analytics.js";
 const adminContentMap = {
   dashboard: "src/components/adminDashboard/dashboard.html",
   approveevents: "src/components/adminDashboard/approve-events.html",
   manageevents: "src/components/adminDashboard/event-management.html",
   usermanagement: "src/components/adminDashboard/user-management.html",
-  venuemanagement: "src/components/adminDashboard/venue-management.html",
+  categorymanagement: "src/components/adminDashboard/category-management.html",
   analytics: "src/components/adminDashboard/analytics.html",
   moderation: "src/components/adminDashboard/content-moderation.html",
+  logs: "src/components/adminDashboard/logs.html",
   settings: "src/components/adminDashboard/system-settings.html",
 };
 
@@ -55,9 +64,26 @@ export function setupAdminMenu() {
         }
         if (view === "manageevents") {
           loadApprovedEvents();
+          setupEventPromote();
+          loadPromotedEvents();
         }
         if (view === "usermanagement") {
           loadUsers();
+        }
+        if (view === "categorymanagement") {
+          loadCategories();
+
+          loadPlaces();
+          setupCategoryAndPlaceCreation();
+        }
+        if (view === "dashboard") {
+          loadDashboard();
+        }
+        if (view === "settings") {
+          initBackupExport();
+        }
+        if (view === "analytics") {
+          initAnalytics();
         }
       } catch (err) {
         console.error(`Error loading ${file}:`, err);
@@ -69,15 +95,6 @@ export function setupAdminMenu() {
   // Load default section
   const defaultBtn = document.querySelector("[data-admin-menu].default");
   if (defaultBtn) defaultBtn.click();
-}
-
-// This function will be exported and called from main.js
-export function initializeAdminPage() {
-  console.log("Admin page features initialized.");
-
-  // You can also load events for approval once the page is initialized
-  loadEventsForApproval();
-  loadApprovedEvents();
 }
 
 // Function to load all events (approved and pending)
@@ -197,16 +214,28 @@ function populateApprovedEventsTable(events) {
     row.classList.add("border-b");
 
     row.innerHTML = `
-      <td class="px-4 py-2">${event.title}</td>
-      <td class="px-4 py-2">${event.description}</td>
-      <td class="px-4 py-2">${event.organizer_name}</td>
-      <td class="px-4 py-2">${event.category_name}</td>
-      <td class="px-4 py-2">${event.place_name}</td>
-      <td class="px-4 py-2 space-x-2">
-        <button class="text-blue-600 hover:underline promote-btn" data-id="${event.id}">Promote</button>
-        <button class="text-red-600 hover:underline delete-btn" data-id="${event.id}">Delete</button>
-      </td>
-    `;
+  <td class="px-4 py-2">${event.title}</td>
+  <td class="px-4 py-2">${event.description}</td>
+  <td class="px-4 py-2">${event.organizer_name}</td>
+  <td class="px-4 py-2">${event.category_name}</td>
+  <td class="px-4 py-2 w-1/5 truncate">${event.place_name}</td>
+  <td class="px-4 py-2">
+    <div class="flex gap-2">
+      <button
+        class="bg-green-600 text-white px-3 py-1 rounded-md promote-btn hover:bg-green-700"
+        data-id="${event.id}"
+      >
+        Promote
+      </button>
+      <button
+        class="bg-red-600 text-white px-3 py-1 rounded-md delete-btn hover:bg-red-700"
+        data-id="${event.id}"
+      >
+        Delete
+      </button>
+    </div>
+  </td>
+`;
 
     mbody.appendChild(row);
   });
@@ -308,13 +337,13 @@ function setupEventPromote() {
   // Promote button
   const promoteButtons = document.querySelectorAll(".promote-btn");
   promoteButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
+    button.addEventListener("click", async (event) => {
       const eventId = event.target.getAttribute("data-id");
-      promoteEvent(eventId);
+      await promoteEvent(eventId);
     });
   });
 
-  // Delete button
+  // Delete button (no change here, as per your note)
   const deleteButtons = document.querySelectorAll(".delete-btn");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
@@ -324,10 +353,104 @@ function setupEventPromote() {
   });
 }
 
-// Function to promote an event (currently just an alert)
-function promoteEvent(eventId) {
-  console.log("Promoting event with ID:", eventId);
-  alert("Event promoted! (Feature will be implemented later)");
+// 🔥 Real promotion API call
+async function promoteEvent(eventId) {
+  try {
+    const res = await fetch("http://localhost:5000/api/promote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ event_id: eventId }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Failed to promote event");
+      return;
+    }
+
+    alert("Event promoted successfully!");
+    // Optionally re-fetch/promoted events
+    await loadPromotedEvents();
+    await loadApprovedEvents();
+  } catch (err) {
+    console.error("Promotion error:", err);
+    alert("An error occurred while promoting the event.");
+  }
+}
+async function loadPromotedEvents() {
+  try {
+    const res = await fetch("http://localhost:5000/api/promote");
+    const events = await res.json();
+
+    const tbody = document.getElementById("promoted-events-body");
+    tbody.innerHTML = ""; // Clear existing rows
+
+    if (!Array.isArray(events) || events.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="6" class="px-4 py-2 text-center text-gray-500">No promoted events</td>`;
+      tbody.appendChild(row);
+      return;
+    }
+
+    events.forEach((event) => {
+      const row = document.createElement("tr");
+      row.classList.add("border-b", "hover:bg-gray-50");
+
+      row.innerHTML = `
+        <td class="px-4 py-2 font-medium">${event.title}</td>
+        <td class="px-4 py-2">${event.description}</td>
+        <td class="px-4 py-2">${event.organizer_name || "N/A"}</td>
+        <td class="px-4 py-2">${event.category_name || "N/A"}</td>
+        <td class="px-4 py-2">${event.place_name || "N/A"}</td>
+        <td class="px-4 py-2">
+          <button class="text-red-600 hover:underline remove-promote-btn" data-id="${
+            event.promote_id
+          }">
+            Remove
+          </button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    setupPromoteDeleteButtons(); // Hook up the "Remove" buttons
+  } catch (err) {
+    console.error("Failed to load promoted events:", err);
+  }
+}
+function setupPromoteDeleteButtons() {
+  const buttons = document.querySelectorAll(".remove-promote-btn");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const promoteId = btn.getAttribute("data-id");
+
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/promote/${promoteId}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || "Failed to remove promotion");
+          return;
+        }
+
+        alert("Promotion removed!");
+        await loadPromotedEvents();
+        await loadApprovedEvents();
+      } catch (err) {
+        console.error("Delete error:", err);
+        alert("Error removing promoted event.");
+      }
+    });
+  });
 }
 
 // Function to handle event actions (approve, delete)
@@ -393,6 +516,7 @@ async function deleteEvent(eventId) {
       console.log("Event deleted successfully!");
       showToast("Event deleted successfully!", "green"); // Reload events after deletion
       loadEventsForApproval();
+      loadApprovedEvents();
     } else {
       throw new Error("Failed to delete event");
     }
