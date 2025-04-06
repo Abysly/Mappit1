@@ -1,7 +1,47 @@
-<div>
-  <h2 class="text-2xl font-semibold mb-4">Venue Management</h2>
-  <p class="text-gray-600">
-    Add and manage venues available for events. Approve submitted venues from
-    organizers.
-  </p>
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <!-- Categories -->
+  <div class="mb-10">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Categories</h2>
+      <button id="add-category-btn" class="text-blue-600 hover:underline">
+        + Add Category
+      </button>
+    </div>
+    <table
+      class="w-full text-sm text-left text-gray-700 shadow-md rounded-lg overflow-hidden"
+    >
+      <thead class="bg-gray-100 text-gray-600 font-semibold">
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Name</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="category-tbody"></tbody>
+    </table>
+    <div id="category-pagination" class="mt-4 flex justify-center"></div>
+  </div>
+
+  <!-- Places -->
+  <div>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Places / Venues</h2>
+      <button id="add-place-btn" class="text-blue-600 hover:underline">
+        + Add Place
+      </button>
+    </div>
+    <table
+      class="w-full text-sm text-left text-gray-700 shadow-md rounded-lg overflow-hidden"
+    >
+      <thead class="bg-gray-100 text-gray-600 font-semibold">
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Name</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="place-tbody"></tbody>
+    </table>
+    <div id="place-pagination" class="mt-4 flex justify-center"></div>
+  </div>
 </div>

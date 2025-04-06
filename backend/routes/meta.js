@@ -201,4 +201,79 @@ router.delete("/events/:id", async (req, res) => {
   }
 });
 
+// ✅ Add new category
+router.post("/categories", async (req, res) => {
+  const { name } = req.body;
+  if (!name)
+    return res.status(400).json({ error: "Category name is required" });
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO category (name) VALUES ($1) RETURNING *",
+      [name]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error adding category:", err);
+    res.status(500).json({ error: "Failed to add category" });
+  }
+});
+
+// ✅ Delete category by ID
+router.delete("/categories/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM category WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Category deleted", category: result.rows[0] });
+  } catch (err) {
+    console.error("Error deleting category:", err);
+    res.status(500).json({ error: "Failed to delete category" });
+  }
+});
+
+// ✅ Add new place (venue)
+router.post("/places", async (req, res) => {
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: "Place name is required" });
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO places (name) VALUES ($1) RETURNING *",
+      [name]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error adding place:", err);
+    res.status(500).json({ error: "Failed to add place" });
+  }
+});
+
+// ✅ Delete place by ID
+router.delete("/places/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM places WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Place not found" });
+    }
+    res.status(200).json({ message: "Place deleted", place: result.rows[0] });
+  } catch (err) {
+    console.error("Error deleting place:", err);
+    res.status(500).json({ error: "Failed to delete place" });
+  }
+});
+
 export default router;

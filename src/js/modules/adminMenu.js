@@ -1,7 +1,4 @@
-import { logEventAction, showLogs } from "../modules/fetchLogs.js";
-
 const adminContentMap = {
-  logs: "src/components/adminDashboard/logs.html",
   dashboard: "src/components/adminDashboard/dashboard.html",
   approveevents: "src/components/adminDashboard/approve-events.html",
   manageevents: "src/components/adminDashboard/event-management.html",
@@ -56,6 +53,12 @@ export function setupAdminMenu() {
         if (view === "approveevents") {
           loadEventsForApproval();
         }
+        if (view === "manageevents") {
+          loadApprovedEvents();
+        }
+        if (view === "usermanagement") {
+          loadUsers();
+        }
       } catch (err) {
         console.error(`Error loading ${file}:`, err);
         contentArea.innerHTML = `<p class="text-red-500">Failed to load ${view} section.</p>`;
@@ -74,6 +77,7 @@ export function initializeAdminPage() {
 
   // You can also load events for approval once the page is initialized
   loadEventsForApproval();
+  loadApprovedEvents();
 }
 
 // Function to load all events (approved and pending)
@@ -138,6 +142,193 @@ function populateEventsTable(events) {
   // Set up event listeners for approve and delete buttons
   setupEventActions();
 }
+// Function to load approved events
+// Function to load approved events
+async function loadApprovedEvents() {
+  console.log("Loading approved events...");
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/events?is_approved=true"
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch approved events");
+    }
+
+    const events = await response.json();
+    console.log("Fetched approved events:", events);
+
+    // Retry checking for tbody element multiple times (up to 5 attempts)
+    let attempts = 0;
+    const maxAttempts = 5;
+    const interval = setInterval(() => {
+      const mbody = document.getElementById("events-mbody");
+
+      if (mbody) {
+        clearInterval(interval);
+        populateApprovedEventsTable(events);
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearInterval(interval);
+          console.error("The mbody element is still not available.");
+        }
+      }
+    }, 100); // Retry every 100ms
+  } catch (error) {
+    console.error("Error fetching approved events:", error);
+  }
+}
+
+// Function to populate the approved events table with all approved events
+function populateApprovedEventsTable(events) {
+  const mbody = document.getElementById("events-mbody");
+
+  if (!mbody) {
+    console.error('The mbody element with id "events-mbody" was not found.');
+    return;
+  }
+
+  mbody.innerHTML = ""; // Clear the existing table rows
+
+  events.forEach((event) => {
+    const row = document.createElement("tr");
+    row.classList.add("border-b");
+
+    row.innerHTML = `
+      <td class="px-4 py-2">${event.title}</td>
+      <td class="px-4 py-2">${event.description}</td>
+      <td class="px-4 py-2">${event.organizer_name}</td>
+      <td class="px-4 py-2">${event.category_name}</td>
+      <td class="px-4 py-2">${event.place_name}</td>
+      <td class="px-4 py-2 space-x-2">
+        <button class="text-blue-600 hover:underline promote-btn" data-id="${event.id}">Promote</button>
+        <button class="text-red-600 hover:underline delete-btn" data-id="${event.id}">Delete</button>
+      </td>
+    `;
+
+    mbody.appendChild(row);
+  });
+
+  // Set up event listeners for promote and delete buttons
+  setupEventPromote();
+}
+
+async function loadUsers() {
+  console.log("Loading users...");
+
+  const loader = document.getElementById("user-loader");
+  if (loader) loader.classList.remove("hidden"); // Show loader
+
+  try {
+    const res = await fetch("http://localhost:5000/api/users", {
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error("Failed to fetch users");
+
+    const users = await res.json();
+    console.log("Fetched users:", users);
+
+    const tbody = document.getElementById("users-tbody");
+    if (tbody) {
+      populateUsersTable(users);
+    } else {
+      console.error("The tbody element is not available yet.");
+    }
+  } catch (error) {
+    console.error("Error loading users:", error);
+  } finally {
+    if (loader) loader.classList.add("hidden"); // Hide loader
+  }
+}
+
+function populateUsersTable(users) {
+  const tbody = document.getElementById("users-tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  if (!Array.isArray(users) || users.length === 0) {
+    console.warn("No users found.");
+    return;
+  }
+
+  users.forEach((user) => {
+    const row = document.createElement("tr");
+    row.classList.add("border-b");
+
+    row.innerHTML = `
+      <td class="px-4 py-2">${user.id}</td>
+      <td class="px-4 py-2">${user.name}</td>
+      <td class="px-4 py-2">${user.email}</td>
+      <td class="px-4 py-2">
+        <img src="/backend/uploads/${
+          user.profile_pic
+        }" alt="Profile Pic" class="w-10 h-10 rounded-full object-cover" />
+      </td>
+      <td class="px-4 py-2">
+        ${
+          user.is_admin
+            ? `<span class="text-green-600">Admin</span>`
+            : `<span class="text-gray-500">User</span>`
+        }
+      </td>
+      <td class="px-4 py-2">
+        ${
+          user.is_subscribed
+            ? `<span class="text-blue-600">Subscribed</span>`
+            : `<span class="text-gray-500">Free</span>`
+        }
+      </td>
+      <td class="px-4 py-2 space-x-2">
+        <button class="text-red-600 hover:underline delete-user-btn" data-id="${
+          user.id
+        }">Delete</button>
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+
+  setupUserActions();
+}
+function setupUserActions() {
+  const deleteButtons = document.querySelectorAll(".delete-user-btn");
+  deleteButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const id = e.target.dataset.id;
+      alert(`Delete user ${id} (implement this later)`);
+    });
+  });
+}
+
+// Function to handle event actions (promote, delete)
+function setupEventPromote() {
+  // Promote button
+  const promoteButtons = document.querySelectorAll(".promote-btn");
+  promoteButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const eventId = event.target.getAttribute("data-id");
+      promoteEvent(eventId);
+    });
+  });
+
+  // Delete button
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      const eventId = event.target.getAttribute("data-id");
+      await deleteEvent(eventId);
+    });
+  });
+}
+
+// Function to promote an event (currently just an alert)
+function promoteEvent(eventId) {
+  console.log("Promoting event with ID:", eventId);
+  alert("Event promoted! (Feature will be implemented later)");
+}
 
 // Function to handle event actions (approve, delete)
 function setupEventActions() {
@@ -174,7 +365,6 @@ async function approveEvent(eventId) {
 
     if (response.ok) {
       console.log("Event approved successfully!");
-      await logEventAction("approve", eventId);
       // Show success toast notification
       showToast("Event approved successfully!", "green");
       // Reload events after approval
@@ -201,9 +391,7 @@ async function deleteEvent(eventId) {
 
     if (response.ok) {
       console.log("Event deleted successfully!");
-      await logEventAction("approve", eventId);
-      // Reload events after deletion
-      showToast("Event Deleted successfully!", "red");
+      showToast("Event deleted successfully!", "green"); // Reload events after deletion
       loadEventsForApproval();
     } else {
       throw new Error("Failed to delete event");
@@ -212,6 +400,7 @@ async function deleteEvent(eventId) {
     console.error("Error deleting event:", error);
   }
 }
+
 // Function to show toast notification
 function showToast(message, color) {
   const toast = document.createElement("div");

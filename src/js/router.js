@@ -2,10 +2,7 @@ import { setupPricingToggle } from "../js/modules/pricingToggle.js";
 import { initializeEventPage } from "./eventMain.js";
 import { setupProfileMenu } from "../js/modules/profileMenu.js"; // ✅ Import profile menu setup
 import { initializeHostPage } from "../js/modules/host.js"; // ✅ Import host setup
-import {
-  setupAdminMenu,
-  initializeAdminPage,
-} from "../js/modules/adminMenu.js";
+import { setupAdminMenu } from "../js/modules/adminMenu.js";
 
 export async function loadPage(page) {
   try {
