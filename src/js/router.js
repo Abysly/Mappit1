@@ -24,7 +24,6 @@ export async function loadPage(page) {
       initializeHostPage(); // ✅ Hook in host logic
     } else if (page == "admin") {
       setupAdminMenu();
-      initializeAdminPage();
     }
   } catch (err) {
     document.getElementById("content").innerHTML = `<p>Page not found.</p>`;

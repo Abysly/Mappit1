@@ -115,12 +115,14 @@ router.post("/events", async (req, res) => {
 // GET /api/events - Fetch all events with organizer's username, category, and place
 router.get("/events", async (req, res) => {
   try {
-    // SQL query to join events with users (organizer), categories, and places
-    const result = await pool.query(
-      `SELECT 
+    const { is_approved } = req.query;
+
+    // Base SQL query to join events with users (organizer), categories, and places
+    let query = `
+      SELECT 
         e.id, e.title, e.description, e.start_date, e.end_date, e.venue, e.address, 
         e.latitude, e.longitude, e.price, e.seats_available, e.target_audience, 
-        e.tags, e.youtube_link, e.is_public, e.allow_register, e.registration_link,e.is_approved, 
+        e.tags, e.youtube_link, e.is_public, e.allow_register, e.registration_link, e.is_approved, 
         u.name AS organizer_name,
         c.name AS category_name,
         p.name AS place_name
@@ -128,17 +130,32 @@ router.get("/events", async (req, res) => {
       LEFT JOIN users u ON e.organizer_id = u.id
       LEFT JOIN category c ON e.category_id = c.id
       LEFT JOIN places p ON e.place_id = p.id
-      ORDER BY e.created_at`
-    );
+    `;
 
-    // Log the result to the console for debugging
+    // If the `is_approved` query parameter is provided, filter the events by approval status
+    if (is_approved !== undefined) {
+      // Use TRUE or FALSE depending on the query parameter value
+      const approvedValue = is_approved === "false" ? false : true;
+      query += ` WHERE e.is_approved = ${approvedValue}`;
+    }
+
+    // Log the query for debugging purposes
+    console.log("Executing query:", query);
+
+    // Execute the query
+    const result = await pool.query(query);
+
+    // Log the result for debugging purposes
     console.log("Fetched events:", result.rows);
 
-    // Respond with the data as JSON
-    res.json(result.rows);
+    // Send response with the events data in JSON format
+    res.status(200).json(result.rows);
   } catch (err) {
+    // If there's an error with the database query or something else
     console.error("Error fetching events:", err);
-    res.status(500).json({ error: "Failed to fetch events" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch events", details: err.message });
   }
 });
 
