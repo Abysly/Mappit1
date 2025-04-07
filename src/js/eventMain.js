@@ -6,6 +6,7 @@ import {
   loadApprovedEvents,
   populateDropdowns,
 } from "./eventModules/event.js";
+import { loadFeaturedEvents } from "./eventModules/featuredEvent.js";
 
 export function initializeEventPage() {
   const map = setupEventMap();
@@ -13,4 +14,5 @@ export function initializeEventPage() {
   initializeMapToggle(map); // ✅ Pass the map instance here
   loadApprovedEvents();
   populateDropdowns();
+  loadFeaturedEvents();
 }
