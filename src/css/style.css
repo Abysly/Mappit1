@@ -3,3 +3,21 @@
 @tailwind utilities;
 
 @import "flowbite";
+.step-indicator {
+  @apply flex flex-col items-center relative;
+}
+.step-indicator:not(:last-child):after {
+  @apply content-[''] absolute top-5 left-full w-16 h-0.5 bg-gray-300;
+}
+.step-indicator.active .step-number {
+  @apply bg-blue-600 text-white border-blue-600;
+}
+.step-indicator.active .step-label {
+  @apply text-blue-600 font-medium;
+}
+.step-number {
+  @apply flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 text-gray-500 mb-1 transition;
+}
+.step-label {
+  @apply text-xs text-gray-500;
+}

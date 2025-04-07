@@ -1,11 +1,15 @@
 import { setupEventMap } from "../eventModules/eventMap.js";
 import { setupEventMapTheme } from "../eventModules/mapTheme.js";
-import { map } from "../eventModules/eventMap.js";
-import L from "leaflet";
+//import L from "leaflet";
 
 export function initializeHostPage() {
-  setupEventMap();
-  setupEventMapTheme();
+  const map = setupEventMap("hostMap"); // use a unique container ID
+  if (!map) {
+    console.error("Map container not found for host page.");
+    return;
+  }
+
+  setupEventMapTheme(map);
 
   let marker;
 
@@ -138,6 +142,7 @@ export function initializeHostPage() {
   }
 
   document.getElementById("nextBtn").addEventListener("click", () => {
+    if (!validateStep(currentStep)) return;
     if (currentStep < steps.length) {
       currentStep++;
       updateStep();
@@ -156,6 +161,51 @@ export function initializeHostPage() {
       updateStep();
     }
   });
+  function validateStep(step) {
+    const stepEl = document.querySelector(`.form-step[data-step="${step}"]`);
+    const inputs = stepEl.querySelectorAll("input, select, textarea");
+    let isValid = true;
+    let now = new Date();
+
+    for (const input of inputs) {
+      if (input.hasAttribute("required") && !input.value.trim()) {
+        alert(`❌ Please fill out: ${input.name || input.id}`);
+        input.focus();
+        isValid = false;
+        break;
+      }
+    }
+
+    if (!isValid) return false;
+
+    // ✅ Only do this on Step 2
+    if (step === 2) {
+      const startInput = document.querySelector("input[name='start_date']");
+      const endInput = document.querySelector("input[name='end_date']");
+
+      const startDate = new Date(startInput.value);
+      const endDate = new Date(endInput.value);
+
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        alert("❌ Please enter valid dates.");
+        return false;
+      }
+
+      if (startDate < now) {
+        alert("❌ Start date must be in the future.");
+        startInput.focus();
+        return false;
+      }
+
+      if (endDate <= startDate) {
+        alert("❌ End date must be after start date.");
+        endInput.focus();
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   document.getElementById("eventForm").addEventListener("submit", async (e) => {
     e.preventDefault();

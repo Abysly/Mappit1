@@ -288,14 +288,16 @@ function populateUsersTable(users) {
     const row = document.createElement("tr");
     row.classList.add("border-b");
 
+    const isAdmin = user.role === "admin"; // Assuming you use a 'role' field
+
     row.innerHTML = `
       <td class="px-4 py-2">${user.id}</td>
       <td class="px-4 py-2">${user.name}</td>
       <td class="px-4 py-2">${user.email}</td>
       <td class="px-4 py-2">
-        <img src="/backend/uploads/${
-          user.profile_pic
-        }" alt="Profile Pic" class="w-10 h-10 rounded-full object-cover" />
+        <img src="/backend/uploads/${user.profile_pic}" 
+             alt="Profile Pic" 
+             class="w-10 h-10 rounded-full object-cover" />
       </td>
       <td class="px-4 py-2">
         ${
@@ -312,10 +314,15 @@ function populateUsersTable(users) {
         }
       </td>
       <td class="px-4 py-2 space-x-2">
-        <button class="text-red-600 hover:underline delete-user-btn" data-id="${
-          user.id
-        }">Delete</button>
-      </td>
+  ${
+    user.is_admin
+      ? `<button class="text-yellow-600 hover:underline remove-admin-btn" data-id="${user.id}">Remove Admin</button>`
+      : `<button class="text-green-600 hover:underline make-admin-btn" data-id="${user.id}">Make Admin</button>`
+  }
+  <button class="text-red-600 hover:underline delete-user-btn" data-id="${
+    user.id
+  }">Delete</button>
+</td>
     `;
 
     tbody.appendChild(row);
@@ -324,13 +331,67 @@ function populateUsersTable(users) {
   setupUserActions();
 }
 function setupUserActions() {
-  const deleteButtons = document.querySelectorAll(".delete-user-btn");
-  deleteButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+  document.querySelectorAll(".delete-user-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
       const id = e.target.dataset.id;
       alert(`Delete user ${id} (implement this later)`);
     });
   });
+
+  document.querySelectorAll(".make-admin-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = e.target.dataset.id;
+      await makeAdmin(id);
+    });
+  });
+
+  document.querySelectorAll(".remove-admin-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = e.target.dataset.id;
+      await removeAdmin(id);
+    });
+  });
+}
+async function makeAdmin(id) {
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/users/${id}/make-admin`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed to promote user");
+
+    alert("User promoted to admin!");
+    loadUsers(); // Refresh the list
+  } catch (err) {
+    console.error("Error promoting user:", err);
+    alert("Error promoting user to admin");
+  }
+}
+
+async function removeAdmin(id) {
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/users/${id}/remove-admin`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed to demote admin");
+
+    alert("Admin role removed!");
+    loadUsers(); // Refresh the list
+  } catch (err) {
+    console.error("Error removing admin:", err);
+    alert("Error removing admin role");
+  }
 }
 
 // Function to handle event actions (promote, delete)

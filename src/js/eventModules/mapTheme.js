@@ -1,44 +1,28 @@
 import L from "leaflet";
-import { map } from "./eventMap.js";
 
-export function setupEventMapTheme() {
-  if (!map) return; // Map must be initialized first
+export function setupEventMapTheme(mapInstance) {
+  if (!mapInstance) return;
 
   const darkTheme = L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-    {
-      zIndex: 1,
-    }
+    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
   );
-
   const positronTheme = L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-    {
-      zIndex: 2,
-    }
+    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
   );
-
   const lightTheme = L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      zIndex: 3,
-    }
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   );
-
   const warmTheme = L.tileLayer(
-    "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-    {
-      zIndex: 4,
-    }
+    "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
   );
 
   const baseLayers = {
-    OpenStreetMap: lightTheme,
-    "Dark Theme": darkTheme,
+    Light: lightTheme,
+    Dark: darkTheme,
     Positron: positronTheme,
-    "OpenStreet Hot": warmTheme,
+    Hot: warmTheme,
   };
 
-  L.control.layers(baseLayers).addTo(map);
-  lightTheme.addTo(map); // Default
+  L.control.layers(baseLayers).addTo(mapInstance);
+  lightTheme.addTo(mapInstance); // Default layer
 }

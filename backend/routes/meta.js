@@ -407,5 +407,40 @@ router.delete("/promote/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete promoted event" });
   }
 });
+// Promote user to admin
+router.post("/users/:id/make-admin", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "UPDATE users SET is_admin = true WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ message: "User promoted to admin", user: result.rows[0] });
+  } catch (err) {
+    console.error("Error promoting user:", err);
+    res.status(500).json({ error: "Failed to make user admin" });
+  }
+});
+
+// Demote admin to user
+router.post("/users/:id/remove-admin", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "UPDATE users SET is_admin = false WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ message: "Admin removed", user: result.rows[0] });
+  } catch (err) {
+    console.error("Error demoting user:", err);
+    res.status(500).json({ error: "Failed to remove admin" });
+  }
+});
 
 export default router;
