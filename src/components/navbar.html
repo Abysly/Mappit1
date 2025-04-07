@@ -17,7 +17,53 @@
       >
     </a>
 
-    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+    <div
+      class="flex md:order-2 space-x-4 md:space-x-4 rtl:space-x-reverse items-center"
+    >
+      <!-- Announcement Icon (Hidden by default, shown when user is logged in) -->
+      <!-- Announcement Icon with Dropdown (Hidden by default, shown when user is logged in) -->
+      <div id="announcementWrapper" class="relative hidden">
+        <button
+          id="announcementIcon"
+          class="relative focus:outline-none"
+          aria-expanded="false"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7 text-gray-700 hover:text-blue-700 transition duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2z"
+            />
+          </svg>
+          <!-- Red Notification Dot -->
+          <span
+            id="announcementBadge"
+            class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-600 rounded-full hidden"
+          ></span>
+        </button>
+
+        <!-- Dropdown panel -->
+        <div
+          id="announcementDropdown"
+          class="hidden absolute left-1/2 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 transform -translate-x-1/2"
+        >
+          <div
+            id="announcementList"
+            class="p-4 text-sm text-gray-800 space-y-2"
+          >
+            <p class="text-gray-500 italic">No announcements</p>
+            <!-- JS will populate announcements here -->
+          </div>
+        </div>
+      </div>
+
       <!-- Login Button (Shown when NOT logged in) -->
       <button
         id="loginBtn"

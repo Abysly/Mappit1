@@ -1,5 +1,5 @@
 import { loadAuthModal } from "./authModel.js";
-import { checkAuthState } from "./authState.js"; // Import from new file
+import { checkAuthState } from "./authState.js";
 import { API_BASE_URL } from "../../config.js";
 
 // DOM elements cache
@@ -29,32 +29,37 @@ export async function updateAuthUI() {
   if (img) {
     img.src = profilePicUrl;
   }
-  // Toggle UI elements
+
   if (authElements.loginBtn && authElements.profileMenu) {
     authElements.loginBtn.classList.toggle("hidden", isAuthenticated);
     authElements.profileMenu.classList.toggle("hidden", !isAuthenticated);
   }
 
-  // Update admin menu
   if (authElements.adminMenuItem) {
     authElements.adminMenuItem.classList.toggle("hidden", !isAdmin);
   }
 
-  // Update profile picture
+  const announcementWrapper = document.getElementById("announcementWrapper");
+  if (announcementWrapper) {
+    announcementWrapper.classList.toggle("hidden", !isAuthenticated);
+  }
+
   if (isAuthenticated && authElements.profilePic) {
     authElements.profilePic.src = profilePicUrl;
   }
 }
 
 export function setupAuthButtons() {
-  // Initialize interactive elements
   authElements.dropdownMenu = document.getElementById("dropdownMenu");
   authElements.logoutBtn = document.getElementById("logoutBtn");
   const profileBtn = document.getElementById("profileBtn");
+  const announcementBtn = document.getElementById("announcementIcon");
+  const announcementDropdown = document.getElementById("announcementDropdown");
 
-  // Event listeners
+  // Login
   document.getElementById("loginBtn")?.addEventListener("click", loadAuthModal);
 
+  // Logout
   if (authElements.logoutBtn) {
     authElements.logoutBtn.addEventListener("click", async () => {
       try {
@@ -72,9 +77,46 @@ export function setupAuthButtons() {
     });
   }
 
+  // Toggle profile menu
   if (profileBtn && authElements.dropdownMenu) {
-    profileBtn.addEventListener("click", () => {
+    profileBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       authElements.dropdownMenu.classList.toggle("hidden");
+      announcementDropdown?.classList.add("hidden");
     });
   }
+
+  // Toggle announcement dropdown
+  if (announcementBtn && announcementDropdown) {
+    announcementBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      announcementDropdown.classList.toggle("hidden");
+      authElements.dropdownMenu?.classList.add("hidden");
+    });
+  }
+
+  // Close dropdowns when clicking outside
+  document.addEventListener("click", (e) => {
+    if (
+      !authElements.dropdownMenu?.contains(e.target) &&
+      !profileBtn?.contains(e.target)
+    ) {
+      authElements.dropdownMenu?.classList.add("hidden");
+    }
+
+    if (
+      !announcementDropdown?.contains(e.target) &&
+      !announcementBtn?.contains(e.target)
+    ) {
+      announcementDropdown?.classList.add("hidden");
+    }
+  });
+
+  // Close profile dropdown when clicking on profile menu items
+  const profileLinks = authElements.dropdownMenu?.querySelectorAll("a, button");
+  profileLinks?.forEach((el) => {
+    el.addEventListener("click", () => {
+      authElements.dropdownMenu?.classList.add("hidden");
+    });
+  });
 }

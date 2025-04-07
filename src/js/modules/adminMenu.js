@@ -16,6 +16,7 @@ const adminContentMap = {
   moderation: "src/components/adminDashboard/content-moderation.html",
   logs: "src/components/adminDashboard/logs.html",
   settings: "src/components/adminDashboard/system-settings.html",
+  announcement: "src/components/adminDashboard/announcement.html",
 };
 
 export function setupAdminMenu() {
@@ -215,7 +216,7 @@ function populateApprovedEventsTable(events) {
 
     row.innerHTML = `
   <td class="px-4 py-2">${event.title}</td>
-  <td class="px-4 py-2">${event.description}</td>
+  <td class="px-4 py-2 truncate w-1/6">${event.description}</td>
   <td class="px-4 py-2">${event.organizer_name}</td>
   <td class="px-4 py-2">${event.category_name}</td>
   <td class="px-4 py-2 w-1/5 truncate">${event.place_name}</td>
