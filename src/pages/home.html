@@ -43,12 +43,12 @@
       >
         Explore Events
       </a>
-      <a
-        href="#features"
+      <button
+        id="goToFeaturesBtn"
         class="btn btn-outline btn-lg hover:bg-base-content hover:text-base-100 transition-all duration-300"
       >
         Learn More
-      </a>
+      </button>
     </div>
   </div>
 
@@ -201,9 +201,9 @@
 </section>
 
 <!-- FAQ Section -->
-<section class="py-20 bg-base-100 px-4 scroll-mt-20">
+<section id="faqSection" class="py-20 bg-base-100 px-4 scroll-mt-20">
   <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-16 animate-fade-in-up">
+    <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold text-base-content mb-4">
         Frequently Asked <span class="text-primary">Questions</span>
       </h2>
@@ -211,16 +211,18 @@
         Everything you need to know about Event Mapper
       </p>
     </div>
-    <div class="space-y-4 animate-fade-in-up delay-75">
+
+    <div class="space-y-4" id="faqList">
       <div
-        class="collapse collapse-plus bg-base-200 border border-base-300 rounded-box"
+        class="faq-item border border-base-300 rounded-xl p-4 cursor-pointer"
       >
-        <input type="checkbox" class="peer" />
-        <div class="collapse-title text-xl font-medium">
+        <h3 class="faq-question text-xl font-medium">
           Is Event Mapper free to use?
-        </div>
-        <div class="collapse-content">
-          <p class="text-base-content/80">
+        </h3>
+        <div
+          class="faq-answer overflow-hidden max-h-0 transition-all duration-300 text-base-content/80"
+        >
+          <p class="mt-2">
             Yes! Event Mapper offers a free tier with access to most public
             events. Our premium membership unlocks additional features like
             exclusive events, advanced analytics, and priority support.
@@ -229,14 +231,15 @@
       </div>
 
       <div
-        class="collapse collapse-plus bg-base-200 border border-base-300 rounded-box"
+        class="faq-item border border-base-300 rounded-xl p-4 cursor-pointer"
       >
-        <input type="checkbox" class="peer" />
-        <div class="collapse-title text-xl font-medium">
+        <h3 class="faq-question text-xl font-medium">
           How do I add my own events?
-        </div>
-        <div class="collapse-content">
-          <p class="text-base-content/80">
+        </h3>
+        <div
+          class="faq-answer overflow-hidden max-h-0 transition-all duration-300 text-base-content/80"
+        >
+          <p class="mt-2">
             After creating an account, you can submit events through our
             organizer dashboard. All events go through a quick verification
             process before going live on the platform.
@@ -245,14 +248,15 @@
       </div>
 
       <div
-        class="collapse collapse-plus bg-base-200 border border-base-300 rounded-box"
+        class="faq-item border border-base-300 rounded-xl p-4 cursor-pointer"
       >
-        <input type="checkbox" class="peer" />
-        <div class="collapse-title text-xl font-medium">
+        <h3 class="faq-question text-xl font-medium">
           What payment methods do you accept?
-        </div>
-        <div class="collapse-content">
-          <p class="text-base-content/80">
+        </h3>
+        <div
+          class="faq-answer overflow-hidden max-h-0 transition-all duration-300 text-base-content/80"
+        >
+          <p class="mt-2">
             We accept all major credit cards, PayPal, and in some regions, Apple
             Pay and Google Pay. All transactions are securely processed with
             encryption.
@@ -261,14 +265,15 @@
       </div>
 
       <div
-        class="collapse collapse-plus bg-base-200 border border-base-300 rounded-box"
+        class="faq-item border border-base-300 rounded-xl p-4 cursor-pointer"
       >
-        <input type="checkbox" class="peer" />
-        <div class="collapse-title text-xl font-medium">
+        <h3 class="faq-question text-xl font-medium">
           Can I get a refund for premium membership?
-        </div>
-        <div class="collapse-content">
-          <p class="text-base-content/80">
+        </h3>
+        <div
+          class="faq-answer overflow-hidden max-h-0 transition-all duration-300 text-base-content/80"
+        >
+          <p class="mt-2">
             We offer a 30-day money-back guarantee for all premium memberships.
             After 30 days, we can prorate refunds for the remaining time on a
             case-by-case basis.
@@ -276,7 +281,8 @@
         </div>
       </div>
     </div>
-    <div class="text-center mt-12 animate-fade-in-up delay-300">
+
+    <div class="text-center mt-12">
       <p class="text-lg mb-6">Still have questions?</p>
       <button class="btn btn-primary btn-wide">Contact Support</button>
     </div>

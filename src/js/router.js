@@ -1,4 +1,7 @@
-import { setupPricingToggle } from "../js/modules/pricingToggle.js";
+import {
+  setupPricingToggle,
+  setupPricingPage,
+} from "../js/modules/pricingToggle.js";
 import { initializeEventPage } from "./eventMain.js";
 import { setupProfileMenu } from "../js/modules/profileMenu.js"; // ✅ Import profile menu setup
 import { initializeHostPage } from "../js/modules/host.js"; // ✅ Import host setup
@@ -6,6 +9,7 @@ import { setupAdminMenu } from "../js/modules/adminMenu.js";
 import { initializeSettingsPage } from "../js/modules/settings.js";
 import { initializeEventDetails } from "../js/modules/eventdetails.js";
 import { initializeRegisteredEvents } from "../js/modules/registeredEvent.js";
+import { setupScrollToSection, setupFaqToggle } from "../js/modules/home.js";
 export async function loadPage(page) {
   try {
     const res = await fetch(`/src/pages/${page}.html`);
@@ -15,6 +19,7 @@ export async function loadPage(page) {
     // 🔧 Run specific setup functions depending on the page
     if (page === "pricing") {
       setupPricingToggle();
+      setupPricingPage();
     } else if (page === "events") {
       initializeEventPage();
     } else if (page === "profile") {
@@ -36,6 +41,9 @@ export async function loadPage(page) {
       initializeSettingsPage(); // ✅ Hook in settings logic
     } else if (page === "eventdetails") {
       initializeEventDetails();
+    } else if (page === "home") {
+      setupScrollToSection();
+      setupFaqToggle();
     }
   } catch (err) {
     document.getElementById("content").innerHTML = `<p>Page not found.</p>`;

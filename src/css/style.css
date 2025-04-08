@@ -75,3 +75,20 @@
 .event-card {
   width: 100%;
 }
+html {
+  scroll-behavior: smooth;
+}
+/* Outer wrapper & background */
+.leaflet-popup.custom-popup .leaflet-popup-content-wrapper {
+  @apply bg-base-100 text-primary rounded-xl shadow-lg;
+}
+
+/* The little tip arrow */
+.leaflet-popup.custom-popup .leaflet-popup-tip {
+  @apply bg-base-100;
+}
+
+/* Ensure text inside also matches Tailwind/DaisyUI theme */
+.leaflet-popup.custom-popup .leaflet-popup-content {
+  @apply text-sm font-sans;
+}
