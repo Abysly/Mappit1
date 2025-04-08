@@ -123,6 +123,7 @@ router.get("/events", async (req, res) => {
         e.id, e.title, e.description, e.start_date, e.end_date, e.venue, e.address, 
         e.latitude, e.longitude, e.price, e.seats_available, e.target_audience, 
         e.tags, e.youtube_link, e.is_public, e.allow_register, e.registration_link, e.is_approved, 
+        e.banner_image, e.event_image, -- ✅ added these
         u.name AS organizer_name,
         c.name AS category_name,
         p.name AS place_name
@@ -440,6 +441,150 @@ router.post("/users/:id/remove-admin", async (req, res) => {
   } catch (err) {
     console.error("Error demoting user:", err);
     res.status(500).json({ error: "Failed to remove admin" });
+  }
+});
+router.get("/users/:id/registrations", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `
+      SELECT e.*, u.name AS organizer_name
+      FROM event_registrations er
+      JOIN events e ON er.event_id = e.id
+      LEFT JOIN users u ON e.organizer_id = u.id
+      WHERE er.user_id = $1
+      ORDER BY er.registered_at DESC
+    `,
+      [id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching user's registered events:", err);
+    res.status(500).json({ error: "Failed to fetch user registrations" });
+  }
+});
+router.get("/events/:id/registrations/count", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT COUNT(*) FROM event_registrations WHERE event_id = $1`,
+      [id]
+    );
+    res.json({ count: parseInt(result.rows[0].count, 10) });
+  } catch (err) {
+    console.error("Error counting event registrations:", err);
+    res.status(500).json({ error: "Failed to count registrations" });
+  }
+});
+router.get("/events/:id/registrations", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `
+      SELECT 
+        u.id, 
+        u.name, 
+        u.email, 
+        u.profile_pic, -- ✅ added
+        er.registered_at
+      FROM event_registrations er
+      JOIN users u ON er.user_id = u.id
+      WHERE er.event_id = $1
+      ORDER BY er.registered_at DESC
+    `,
+      [id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching users for event:", err);
+    res.status(500).json({ error: "Failed to fetch registered users" });
+  }
+});
+router.post("/events/:id/register", async (req, res) => {
+  const { id: event_id } = req.params;
+
+  // ✅ Check if user is logged in
+  if (!req.session?.user?.id) {
+    return res.status(401).json({ error: "User not authenticated" });
+  }
+
+  const user_id = req.session.user.id;
+
+  try {
+    // ✅ Prevent duplicate registration
+    const existing = await pool.query(
+      `SELECT 1 FROM event_registrations WHERE event_id = $1 AND user_id = $2`,
+      [event_id, user_id]
+    );
+
+    if (existing.rowCount > 0) {
+      return res
+        .status(409)
+        .json({ error: "User already registered for this event" });
+    }
+
+    // ✅ Insert into registration table
+    await pool.query(
+      `INSERT INTO event_registrations (event_id, user_id) VALUES ($1, $2)`,
+      [event_id, user_id]
+    );
+
+    res.status(201).json({ message: "Registered successfully" });
+  } catch (err) {
+    console.error("Error registering user for event:", err);
+    res.status(500).json({ error: "Failed to register" });
+  }
+});
+router.get("/events/:id/is-registered", async (req, res) => {
+  const { id } = req.params;
+  const { user_id } = req.query;
+
+  try {
+    const result = await pool.query(
+      `SELECT 1 FROM event_registrations WHERE event_id = $1 AND user_id = $2 LIMIT 1`,
+      [id, user_id]
+    );
+
+    if (result.rowCount > 0) {
+      res.json({ registered: true });
+    } else {
+      res.json({ registered: false });
+    }
+  } catch (err) {
+    console.error("Error checking registration status:", err);
+    res.status(500).json({ error: "Failed to check registration" });
+  }
+});
+router.get("/users/:id/events", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT 
+        e.id,
+        e.title,
+        e.description,
+        e.start_date,
+        e.address,
+        e.banner_image,
+        e.created_at,
+        COUNT(er.id) AS registrations_count
+      FROM events e
+      LEFT JOIN event_registrations er ON e.id = er.event_id
+      WHERE e.organizer_id = $1
+      GROUP BY e.id
+      ORDER BY e.created_at DESC
+      `,
+      [id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching events created by user:", err);
+    res.status(500).json({ error: "Failed to fetch your events" });
   }
 });
 

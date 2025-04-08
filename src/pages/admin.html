@@ -1,21 +1,21 @@
 <div class="min-h-screen flex">
   <!-- Sidebar -->
-  <aside class="w-64 p-4 bg-white border-r border-gray-200 shadow">
+  <aside class="w-64 p-4 bg-base-300 border-r border-base-200 shadow">
     <div class="mb-6">
       <div class="flex items-center space-x-3">
         <div
-          class="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold"
+          class="w-8 h-8 bg-primary text-primary-content rounded-lg flex items-center justify-center font-bold"
         >
           EM
         </div>
-        <h1 class="text-xl font-bold text-gray-800">
-          Mappit <span class="text-blue-600">Admin</span>
+        <h1 class="text-xl font-bold text-base-content">
+          Mappit <span class="text-primary">Admin</span>
         </h1>
       </div>
     </div>
     <nav class="space-y-2">
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item default"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item default"
         data-admin-menu="dashboard"
       >
         Dashboard
@@ -24,7 +24,7 @@
       <div>
         <button
           id="eventDropdownBtn"
-          class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 flex justify-between items-center"
+          class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content flex justify-between items-center"
         >
           <span>Event Management</span>
           <svg
@@ -40,13 +40,13 @@
         </button>
         <div id="eventSubMenu" class="ml-4 mt-2 space-y-1 hidden">
           <button
-            class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-600 admin-menu-item"
+            class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm text-base-content/70 admin-menu-item"
             data-admin-menu="approveevents"
           >
             Approve Events
           </button>
           <button
-            class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-600 admin-menu-item"
+            class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm text-base-content/70 admin-menu-item"
             data-admin-menu="manageevents"
           >
             Manage Events
@@ -55,43 +55,43 @@
       </div>
 
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="usermanagement"
       >
         User Management
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="categorymanagement"
       >
         Category Management
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="announcement"
       >
         Announcements
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="analytics"
       >
         Analytics
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="moderation"
       >
         Content Moderation
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="logs"
       >
         Logs
       </button>
       <button
-        class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm font-medium text-gray-700 admin-menu-item"
+        class="w-full text-left px-3 py-2 rounded-md hover:bg-base-200 text-sm font-medium text-base-content admin-menu-item"
         data-admin-menu="settings"
       >
         System Settings
@@ -100,7 +100,7 @@
   </aside>
 
   <!-- Main Content -->
-  <section id="admin-content" class="flex-1 p-6 bg-gray-50">
+  <section id="admin-content" class="flex-1 p-6 bg-base-100">
     <!-- Dynamic content will be injected here -->
   </section>
 </div>

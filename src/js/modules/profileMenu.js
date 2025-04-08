@@ -1,10 +1,12 @@
 import { API_BASE_URL } from "../../config.js";
 import { updateAuthUI } from "./authController.js"; // make sure it's imported
+import { initializeRegisteredEvents } from "./registeredEvent.js";
+import { initializeYourEvents } from "./your-events.js";
 const contentMap = {
   profile: "src/components/profileComponents/profile.html",
   edit: "src/components/profileComponents/edit-profile.html",
   groups: "src/components/profileComponents/groups.html",
-  friends: "src/components/profileComponents/friends.html",
+  hostedevents: "src/components/profileComponents/your-events.html",
   events: "src/components/profileComponents/registered-events.html",
 };
 
@@ -45,6 +47,12 @@ export function setupProfileMenu() {
         if (view === "edit") {
           handleProfileUpload(); // ⬅️ defined below
           await updateAuthUI();
+        }
+        if (view === "events") {
+          initializeRegisteredEvents(); // ✅ Initialize after DOM is ready
+        }
+        if (view === "hostedevents") {
+          initializeYourEvents();
         }
       } catch (err) {
         console.error(`Error loading ${file}:`, err);

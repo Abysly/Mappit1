@@ -2,7 +2,6 @@ import { loadNavbar } from "../js/modules/loadComponents.js";
 import { loadFooter } from "../js/modules/footer.js";
 import { setupRouter } from "./router.js";
 import { setupPricingToggle } from "../js/modules/pricingToggle.js";
-import { setupProfileMenu } from "../js/modules/profileMenu.js";
 import {
   setupAuthButtons,
   updateAuthUI,

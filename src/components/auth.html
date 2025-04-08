@@ -2,10 +2,10 @@
   id="authContainer"
   class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden"
 >
-  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm relative">
+  <div class="bg-base-100 p-8 rounded-2xl shadow-lg w-full max-w-sm relative">
     <button
       id="closeAuth"
-      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
+      class="absolute top-3 right-3 text-base-content hover:text-error text-xl"
     >
       ✕
     </button>
@@ -13,20 +13,47 @@
     <!-- Logo -->
     <div class="flex flex-col items-center mb-6">
       <img src="/assets/mappit_logo.png" alt="Mappit Logo" class="h-16 mb-2" />
-      <h2 class="text-2xl font-bold text-gray-800">Mappit</h2>
+      <h2 class="text-2xl font-bold text-base-content">Mappit</h2>
     </div>
 
     <!-- Dynamic Form Area -->
-    <div id="formContent"></div>
+    <div id="formContent">
+      <!-- Example Form Fields -->
+      <div class="space-y-4">
+        <div>
+          <label for="email" class="block text-sm text-base-content mb-1"
+            >Email</label
+          >
+          <input
+            id="email"
+            type="email"
+            class="input input-bordered bg-base-100 w-full"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div>
+          <label for="password" class="block text-sm text-base-content mb-1"
+            >Password</label
+          >
+          <input
+            id="password"
+            type="password"
+            class="input input-bordered bg-base-100 w-full"
+            placeholder="Enter your password"
+          />
+        </div>
+      </div>
+    </div>
 
     <!-- Links -->
-    <div class="mt-4 text-center text-sm text-gray-600">
+    <div class="mt-4 text-center text-sm text-base-content">
       <a href="#" id="toggleFormLink"
-        >Don’t have an account? <span class="text-blue-600">Register</span></a
+        >Don’t have an account?
+        <span class="text-primary hover:underline">Register</span></a
       >
     </div>
-    <div class="mt-2 text-center text-sm text-gray-600">
-      <a href="#" id="forgotPasswordLink" class="text-blue-600"
+    <div class="mt-2 text-center text-sm text-base-content">
+      <a href="#" id="forgotPasswordLink" class="text-primary hover:underline"
         >Forgot Password?</a
       >
     </div>

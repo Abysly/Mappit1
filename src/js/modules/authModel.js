@@ -106,6 +106,10 @@ export async function loadAuthModal() {
       }
 
       if (isLogin) {
+        const data = await response.json();
+
+        // Save user to localStorage
+        localStorage.setItem("user", JSON.stringify(data.user));
         authContainer.classList.add("hidden");
         updateAuthUI();
       } else {

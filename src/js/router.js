@@ -3,7 +3,9 @@ import { initializeEventPage } from "./eventMain.js";
 import { setupProfileMenu } from "../js/modules/profileMenu.js"; // ✅ Import profile menu setup
 import { initializeHostPage } from "../js/modules/host.js"; // ✅ Import host setup
 import { setupAdminMenu } from "../js/modules/adminMenu.js";
-
+import { initializeSettingsPage } from "../js/modules/settings.js";
+import { initializeEventDetails } from "../js/modules/eventdetails.js";
+import { initializeRegisteredEvents } from "../js/modules/registeredEvent.js";
 export async function loadPage(page) {
   try {
     const res = await fetch(`/src/pages/${page}.html`);
@@ -20,7 +22,20 @@ export async function loadPage(page) {
     } else if (page === "host") {
       initializeHostPage(); // ✅ Hook in host logic
     } else if (page == "admin") {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (!user?.is_admin) {
+        document.getElementById(
+          "content"
+        ).innerHTML = `<p class="text-red-500 p-4">❌ Access Denied</p>`;
+        return;
+      }
+
       setupAdminMenu();
+    } else if (page === "settings") {
+      initializeSettingsPage(); // ✅ Hook in settings logic
+    } else if (page === "eventdetails") {
+      initializeEventDetails();
     }
   } catch (err) {
     document.getElementById("content").innerHTML = `<p>Page not found.</p>`;
