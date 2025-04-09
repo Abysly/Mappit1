@@ -3,13 +3,15 @@ import {
   setupPricingPage,
 } from "../js/modules/pricingToggle.js";
 import { initializeEventPage } from "./eventMain.js";
-import { setupProfileMenu } from "../js/modules/profileMenu.js"; // ✅ Import profile menu setup
-import { initializeHostPage } from "../js/modules/host.js"; // ✅ Import host setup
+import { setupProfileMenu } from "../js/modules/profileMenu.js";
+import { initializeHostPage } from "../js/modules/host.js";
 import { setupAdminMenu } from "../js/modules/adminMenu.js";
 import { initializeSettingsPage } from "../js/modules/settings.js";
 import { initializeEventDetails } from "../js/modules/eventdetails.js";
 import { initializeRegisteredEvents } from "../js/modules/registeredEvent.js";
 import { setupScrollToSection, setupFaqToggle } from "../js/modules/home.js";
+import { checkLoginAccess } from "../js/modules/authService.js"; // ✅ Import auth check
+
 export async function loadPage(page) {
   try {
     const res = await fetch(`/src/pages/${page}.html`);
@@ -22,13 +24,24 @@ export async function loadPage(page) {
       setupPricingPage();
     } else if (page === "events") {
       initializeEventPage();
-    } else if (page === "profile") {
-      setupProfileMenu(); // ✅ Profile page setup
-    } else if (page === "host") {
-      initializeHostPage(); // ✅ Hook in host logic
-    } else if (page == "admin") {
-      const user = JSON.parse(localStorage.getItem("user"));
 
+      // ✅ Protect "Create Event" button
+      const createBtn = document.getElementById("createEventBtn");
+      if (createBtn) {
+        createBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const ok = await checkLoginAccess();
+          if (ok) {
+            window.location.hash = "host";
+          }
+        });
+      }
+    } else if (page === "profile") {
+      setupProfileMenu();
+    } else if (page === "host") {
+      initializeHostPage();
+    } else if (page === "admin") {
+      const user = JSON.parse(localStorage.getItem("user"));
       if (!user?.is_admin) {
         document.getElementById(
           "content"
@@ -38,7 +51,7 @@ export async function loadPage(page) {
 
       setupAdminMenu();
     } else if (page === "settings") {
-      initializeSettingsPage(); // ✅ Hook in settings logic
+      initializeSettingsPage();
     } else if (page === "eventdetails") {
       initializeEventDetails();
     } else if (page === "home") {
@@ -51,13 +64,11 @@ export async function loadPage(page) {
 }
 
 export function setupRouter() {
-  // On hash change
   window.addEventListener("hashchange", () => {
     const page = location.hash.replace("#", "") || "home";
     loadPage(page);
   });
 
-  // On initial load
   const initialPage = location.hash.replace("#", "") || "home";
   loadPage(initialPage);
 }

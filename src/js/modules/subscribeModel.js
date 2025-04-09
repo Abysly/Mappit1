@@ -1,7 +1,7 @@
 let modalLoaded = false;
 
 export async function loadSubscribeModal() {
-  // Already loaded? Just show
+  // If already loaded, simply show it
   if (modalLoaded) {
     document.getElementById("subscribeModal")?.classList.remove("hidden");
     return;
@@ -11,10 +11,23 @@ export async function loadSubscribeModal() {
     const response = await fetch("/subscribe.html");
     const html = await response.text();
 
-    // Create a wrapper and inject into DOM
+    // Create a wrapper and inject the modal HTML into the DOM
     const wrapper = document.createElement("div");
     wrapper.innerHTML = html;
     document.body.appendChild(wrapper);
+
+    // After injection, attach the event listener safely
+    const subscribeModalEl = document.getElementById("subscribeModal");
+    if (subscribeModalEl) {
+      subscribeModalEl.addEventListener("click", (e) => {
+        // If the click is on the backdrop (i.e. the modal container)
+        if (e.target.id === "subscribeModal") {
+          closeSubscribeModal();
+        }
+      });
+    } else {
+      console.warn("subscribeModal element not found after injection!");
+    }
 
     modalLoaded = true;
   } catch (error) {
@@ -28,10 +41,3 @@ export function closeSubscribeModal() {
     modal.classList.add("hidden");
   }
 }
-
-// inside subscribeModel.js after injection:
-document.getElementById("subscribeModal").addEventListener("click", (e) => {
-  if (e.target.id === "subscribeModal") {
-    closeSubscribeModal();
-  }
-});
