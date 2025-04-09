@@ -9,7 +9,11 @@ import { setupAdminMenu } from "../js/modules/adminMenu.js";
 import { initializeSettingsPage } from "../js/modules/settings.js";
 import { initializeEventDetails } from "../js/modules/eventdetails.js";
 import { initializeRegisteredEvents } from "../js/modules/registeredEvent.js";
-import { setupScrollToSection, setupFaqToggle } from "../js/modules/home.js";
+import {
+  setupScrollToSection,
+  setupFaqToggle,
+  setupThemeToggle,
+} from "../js/modules/home.js";
 import { checkLoginAccess } from "../js/modules/authService.js"; // ✅ Import auth check
 
 export async function loadPage(page) {
@@ -57,6 +61,7 @@ export async function loadPage(page) {
     } else if (page === "home") {
       setupScrollToSection();
       setupFaqToggle();
+      setupThemeToggle();
     }
   } catch (err) {
     document.getElementById("content").innerHTML = `<p>Page not found.</p>`;

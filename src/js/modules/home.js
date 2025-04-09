@@ -34,3 +34,23 @@ export function setupFaqToggle() {
     });
   });
 }
+export function setupThemeToggle() {
+  const toggle = document.getElementById("themeToggle");
+  const root = document.documentElement;
+
+  if (!toggle) return;
+
+  // Check stored theme or fallback to system preference
+  const storedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
+  root.setAttribute("data-theme", initialTheme);
+  toggle.checked = initialTheme === "dark";
+
+  toggle.addEventListener("change", () => {
+    const newTheme = toggle.checked ? "dark" : "light";
+    root.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+}
