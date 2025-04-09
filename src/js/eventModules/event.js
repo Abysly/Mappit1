@@ -1,3 +1,4 @@
+import { currentLocation } from "./eventMap.js";
 export function initializeMapToggle(mapInstance) {
   window.mapInstance = mapInstance;
   const toggleMapBtn = document.getElementById("toggleMapBtn");
@@ -85,6 +86,15 @@ export async function loadApprovedEvents() {
       currentPage = 1;
       window.approvedEvents = filtered.filter((e) => e.latitude && e.longitude);
       renderEvents(filtered, currentPage);
+
+      // ✅ Update map markers if map is visible
+      if (
+        !document.getElementById("eventMap")?.classList.contains("hidden") &&
+        window.mapInstance
+      ) {
+        clearMarkers(window.mapInstance);
+        addMarkersToMap(window.mapInstance, window.approvedEvents);
+      }
     }
 
     function renderEvents(filteredEvents, page = 1) {

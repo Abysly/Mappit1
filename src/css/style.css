@@ -92,3 +92,23 @@ html {
 .leaflet-popup.custom-popup .leaflet-popup-content {
   @apply text-sm font-sans;
 }
+.leaflet-control-custom button {
+  background-color: white;
+  border: none;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-control-custom button:hover {
+  background-color: #f0f0f0;
+}
+
+.leaflet-control-custom svg {
+  stroke: #333;
+}
